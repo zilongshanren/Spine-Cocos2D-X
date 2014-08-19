@@ -34,8 +34,16 @@ set(PLATFORM_FOLDER mac)
 add_definitions(-DCC_TARGET_OS_MAC)
 add_definitions(-D_USRDLL)
 add_definitions(-DCC_KEYBOARD_SUPPORT)
+elseif(LINUX)
+add_definitions(-DLINUX)
+set(PLATFORM_FOLDER linux)
 endif(IOS)
 
+if(LINUX32)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
+else()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
+endif(LINUX32)
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
@@ -46,32 +54,24 @@ set(CMAKE_EXE_LINKER_FLAGS
     "-framework AudioToolbox -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES"
 )
 
-if(IOS)
 include_directories(
   /usr/include
   /usr/include/GLFW
   /usr/local/include/GLFW
+  ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
   ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}/Simulation
-  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
 )
+
+if(IOS)
 link_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/prebuilt/ios
 )
 elseif(MACOX)
-include_directories(
-  ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/include/mac
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
-  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
-)
 link_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/prebuilt/mac
   ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/prebuilt/mac
