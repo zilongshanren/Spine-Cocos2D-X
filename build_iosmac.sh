@@ -10,7 +10,7 @@ mkdir build.ios
 cd build.ios
 
 #generate ios project
-cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain/iOS_32.cmake  -DCMAKE_IOS_DEVELOPER_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/  -GXcode ..
+cmake -DIOS=1  -DCMAKE_TOOLCHAIN_FILE=../toolchain/iOS_32.cmake  -DCMAKE_IOS_DEVELOPER_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/  -GXcode ..
 
 
 # build iphone simulator
@@ -31,8 +31,8 @@ rm -rf build.ios
 mkdir build.ios
 cd build.ios
 
-#generate ios project
-cmake -DCMAKE_TOOLCHAIN_FILE=../toolchain/iOS_64.cmake  -DCMAKE_IOS_DEVELOPER_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/  -GXcode ..
+#generate ios project for arch 64
+cmake -DIOS=1 -DCMAKE_TOOLCHAIN_FILE=../toolchain/iOS_64.cmake  -DCMAKE_IOS_DEVELOPER_ROOT=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/  -GXcode ..
 
 
 # build iphone simulator 64 bit
@@ -63,7 +63,7 @@ echo "finished build ios fat library"
 rm -rf build.mac
 mkdir build.mac
 cd build.mac
-cmake -G Xcode ..
+cmake -DMACOX=1 -G Xcode ..
 
 xcodebuild -project Project.xcodeproj -alltargets  -arch x86_64 -configuration Release
 

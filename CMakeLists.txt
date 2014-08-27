@@ -26,92 +26,71 @@
 # this CMakeLists is to generate libChipmunk.a
 cmake_minimum_required(VERSION 2.8)
 
-include(BuildHelpers.CMakeLists.txt)
+if(IOS)
+add_definitions(-DCC_TARGET_OS_IPHONE)
+set(PLATFORM_FOLDER ios)
+elseif(MACOX)
+set(PLATFORM_FOLDER mac)
+add_definitions(-DCC_TARGET_OS_MAC)
+add_definitions(-D_USRDLL)
+add_definitions(-DCC_KEYBOARD_SUPPORT)
+endif(IOS)
 
-if(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE DEBUG)
-else(DEBUG_MODE)
-  set(CMAKE_BUILD_TYPE RELEASE)
-endif(DEBUG_MODE)
 
-set(CMAKE_C_FLAGS_DEBUG "-DCOCOS2D_DEBUG=1")
+set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
 
-if(MSVC)
-  ADD_DEFINITIONS(-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS
-                  -wd4251 -wd4244 -wd4334 -wd4005 -wd4820 -wd4710
-                  -wd4514 -wd4056 -wd4996 -wd4099)
-else()
-  set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
-  set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
-endif(MSVC)
+set(CMAKE_EXE_LINKER_FLAGS
+    "-framework AudioToolbox -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES"
+)
 
-if(WINDOWS)
-  ADD_DEFINITIONS (-D_USRDLL -DCOCOS2DXWIN32_EXPORTS -D_WINDOWS -DWIN32)
-  set(PLATFORM_FOLDER win32)
-elseif(MACOSX)
-  set(PLATFORM_FOLDER mac)
-else(LINUX)
-  ADD_DEFINITIONS(-DLINUX)
-  set(PLATFORM_FOLDER linux)
-endif()
-
-if(MINGW)
-  add_definitions(-DGLEW_STATIC)
-  add_definitions(-D__SSIZE_T)
-  set(CMAKE_C_STANDARD_LIBRARIES "${CMAKE_C_STANDARD_LIBRARIES} -lws2_32")
-  set(CMAKE_CXX_STANDARD_LIBRARIES "${CMAKE_CXX_STANDARD_LIBRARIES} -lws2_32")
-
-  if(CLANG)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions ")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions ")
-  endif()
-endif()
-
+if(IOS)
 include_directories(
+  /usr/include
+  /usr/include/GLFW
+  /usr/local/include/GLFW
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
-  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/ios
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}/Simulation
+  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
 )
+link_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/prebuilt/ios
+)
+elseif(MACOX)
+include_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/include/mac
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
+  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+)
+link_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/prebuilt/mac
+  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/prebuilt/mac
+)
+endif(IOS)
 
 file(GLOB_RECURSE spine_source_files 
   "${CMAKE_CURRENT_SOURCE_DIR}/spine/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/base/ccFPSImages.c"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/2d/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/3d/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/audio/linux/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/base/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/deprecated/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/editor-support/cocosbuilder/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/editor-support/spine/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/math/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/network/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/physics/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/physics/chipmunk/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/platform/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/platform/linux/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/platform/desktop/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/renderer/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/storage/local-storage/*.cpp"
-     "${CMAKE_CURRENT_SOURCE_DIR}cocos/ui/*.cpp"
   )
 
 
 add_library(Spine STATIC ${spine_source_files})
 
-if ( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-    set(FMOD_LIB "fmodex64")
-else()
-    set(FMOD_LIB "fmodex")
-endif()
-
-# target_link_libraries(cocos2d jpeg webp tiff freetype fontconfig png pthread glfw GLEW GL X11 rt z ${FMOD_LIB} curl)
 
 set_target_properties(Spine
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+
+
+add_subdirectory(cocos)
