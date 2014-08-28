@@ -93,4 +93,4 @@ set_target_properties(Spine
 )
 
 
-add_subdirectory(cocos)
+# add_subdirectory(cocos)
