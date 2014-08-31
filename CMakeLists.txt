@@ -69,6 +69,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
+  ${CMAKE_CURRENT_SOURCE_DIR}/android-toolchain/sysroot/usr/include
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
 )
 
@@ -91,11 +92,15 @@ file(GLOB_RECURSE spine_source_files
 add_library(Spine STATIC ${spine_source_files})
 
 
+if(ANDROID)
+message(STATUS "android doesn't need ARCHIVE_OUTPUT_DIRECTORY")
+else()
 set_target_properties(Spine
     PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
     LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
 )
+endif()
 
 
 # add_subdirectory(cocos)
