@@ -37,18 +37,22 @@ add_definitions(-DCC_KEYBOARD_SUPPORT)
 elseif(LINUX)
 add_definitions(-DLINUX)
 set(PLATFORM_FOLDER linux)
+elseif(WIN32)
+set(PLATFORM_FOLDER win32)
+elseif(ANDROID)
+set(PLATFORM_FOLDER android)
 endif(IOS)
 
 if(LINUX32)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-else()
+elseif(LINUX64)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
 endif(LINUX32)
 
 set(CMAKE_C_FLAGS_DEBUG "-g -Wall -DCOCOS2D_DEBUG=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${CMAKE_C_FLAGS_DEBUG})
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-exceptions -std=c99")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11 -Wno-deprecated-declarations -Wno-reorder")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-exceptions -std=c++11")
 
 set(CMAKE_EXE_LINKER_FLAGS
     "-framework AudioToolbox -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES"
@@ -60,6 +64,7 @@ include_directories(
   /usr/local/include/GLFW
   ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/gles/include/OGLES
   ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
   ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos
