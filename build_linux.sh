@@ -10,20 +10,28 @@ sudo apt-get install lib32stdc++6
 
 sudo apt-get install g++-multilib
 
-rm -rf prebuilt
+LIBNAME="spine"
 
-cmake -DLINUX32=1 -DLINUX=1 .
+rm -rf prebuilt/linux
 
-make
-
-mkdir -p prebuilt/32/
-cp lib/libSpine.a prebuilt/32/
-rm -rf lib
-
-cmake -DLINUX32=0 -DLINUX=1 .
+mkdir build.linux
+cd build.linux
+cmake -DCMAKE_BUILD_TYPE=Release -DLINUX32=1 -DLINUX=1 ..
 
 make
 
+cd ..
+mkdir -p prebuilt/linux/32/
+cp build.linux/lib/lib"${LIBNAME}".a prebuilt/linux/32/
+rm -rf build.linux
 
-mkdir -p prebuilt/64/
-cp lib/libSpine.a  prebuilt/64/
+mkdir build.linux
+cd build.linux
+cmake -DCMAKE_BUILD_TYPE=Release -DLINUX64=1 -DLINUX=1 ..
+
+make
+
+cd ..
+mkdir -p prebuilt/linux/64/
+cp build.linux/lib/lib"${LIBNAME}".a prebuilt/linux/64/
+rm -rf build.linux
