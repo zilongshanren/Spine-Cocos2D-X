@@ -58,6 +58,22 @@ set(CMAKE_EXE_LINKER_FLAGS
     "-framework AudioToolbox -framework CoreGraphics -framework QuartzCore -framework UIKit -framework OpenGLES"
 )
 
+if(ANDROID)
+include_directories(
+  /usr/include
+  /usr/include/GLFW
+  /usr/local/include/GLFW
+  ${CMAKE_CURRENT_SOURCE_DIR}/glfw3/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/gles/include/OGLES
+  ${CMAKE_CURRENT_SOURCE_DIR}/edtaa3func/
+  ${CMAKE_CURRENT_SOURCE_DIR}/freetype2/include/${PLATFORM_FOLDER}
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos
+  ${CMAKE_CURRENT_SOURCE_DIR}/android-toolchain/sysroot/usr/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
+  ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
+)
+else()
 include_directories(
   /usr/include
   /usr/include/GLFW
@@ -71,6 +87,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/base
   ${CMAKE_CURRENT_SOURCE_DIR}/cocos/platform/${PLATFORM_FOLDER}
 )
+endif()
 
 if(IOS)
 link_directories(

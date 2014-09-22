@@ -49,4 +49,5 @@ make
 cd ..
 rm -rf build.android/ 
 
-mv libs/ prebuilt/android/
+mv libs/* prebuilt/android/
+rm -rf libs
