@@ -1,0 +1,21 @@
+/android-toolchain-x86/
+/android-toolchain/
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/build all lualibs Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/build all lualibs iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocos3d Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocos3d iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocosbuilder Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocosbuilder iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocosdenshion Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocosdenshion iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocostudio Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluacocostudio iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaextension Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaextension iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluanetwork Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluanetwork iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaspine Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaspine iOS.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaui Mac.xcscheme
+/cocos/scripting/lua-bindings/proj.ios_mac/cocos2d_lua_bindings.xcodeproj/xcuserdata/guanghui.xcuserdatad/xcschemes/libluaui iOS.xcscheme
+/cocos/ui/proj.win32/

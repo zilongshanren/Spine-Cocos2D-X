@@ -103,4 +103,6 @@ set_target_properties(Spine
 endif()
 
 
+install(DIRECTORY spine/ DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/prebuilt/include"
+          FILES_MATCHING PATTERN "*.h")
 # add_subdirectory(cocos)

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-export ANDROID_NDK=$HOME/AndroidDev/android-ndk-r9d/
+# export ANDROID_NDK=$HOME/AndroidDev/android-ndk-r9d/
+source ~/.bashrc 
 ANDROID_API_LEVEL=19
 
 # generate the android toolchain of arm
@@ -18,7 +19,7 @@ mkdir build.android
 cd build.android
 
 #build for armeabi
-cmake -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../android.toolchain.cmake -DANDROID_ABI="armeabi" -DANDROID=1 ..
+cmake -DCMAKE_BUILD_TYPE=Release -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../toolchain/android.toolchain.cmake -DANDROID_ABI="armeabi" -DANDROID=1 ..
 
 make 
 
@@ -28,7 +29,7 @@ mkdir build.android/
 cd build.android/ 
 
 #build for armeabi-v7a
-cmake -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../android.toolchain.cmake -DANDROID=1 ..
+cmake -DCMAKE_BUILD_TYPE=Release -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../toolchain/android.toolchain.cmake -DANDROID=1 ..
 make
 
 cd ..
@@ -40,10 +41,12 @@ cd build.android/
 export PATH=$PATH:./android-toolchain-x86/bin
 export PATH=$PATH:$ANDROID_NDK/build/tools/
 export ANDROID_STANDALONE_TOOLCHAIN=./android-toolchain-x86
-cmake -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../android.toolchain.cmake -DANDROID_ABI="x86" -DANDROID=1 ..
+cmake -DCMAKE_BUILD_TYPE=Release -DANDROID=1 -DCMAKE_TOOLCHAIN_FILE=../toolchain/android.toolchain.cmake -DANDROID_ABI="x86" -DANDROID=1 ..
 
 make
 
 
 cd ..
 rm -rf build.android/ 
+
+mv libs/ prebuilt/android/
