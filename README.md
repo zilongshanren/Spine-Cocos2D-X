@@ -16,6 +16,12 @@ You must setup ANDROID_NDK environment in your ~/.bashrc file to point to your N
 ```
 
 ###Build for iOS and Mac
+Change the following line to match your own iOS SDK version
+
+```cpp
+IOS_SDK_VERSION="7.1"
+```
+
 ```cpp
 ./build_iosmac.sh
 ```
